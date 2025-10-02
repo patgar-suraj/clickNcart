@@ -1,22 +1,26 @@
 import {useForm} from "react-hook-form"
 import {nanoid} from "nanoid"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { asyncloginuser } from "../store/actions/userActions"
+import { useEffect } from "react"
 
 const Login = () => {
 
   const {register, reset, handleSubmit, formState:{errors}} = useForm()
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   const loginHandler = (user) => {
     dispatch(asyncloginuser(user))
+    navigate("/")
+    // reset()
   }
 
   return (
-    <form onSubmit={handleSubmit(loginHandler)} className='flex flex-col w-full h-full items-center justify-center p-10'>
+    <form onSubmit={handleSubmit(loginHandler)} className='flex flex-col w-full h-screen items-center justify-center px-5 py-24'>
 
-      <div className="w-full md:w-[50vw] lg:w-[30vw] flex flex-col items-center justify-center gap-5 px-5 py-7  border-1 border-[#D4E80D] rounded-2xl">
+      <div className="w-full md:w-[50vw] xl:w-[30vw] flex flex-col items-center justify-center gap-5 px-5 py-7  border-1 border-[#D4E80D] rounded-2xl">
       
       {/* email */}
       <div className="w-full  flex flex-col items-start justify-center">

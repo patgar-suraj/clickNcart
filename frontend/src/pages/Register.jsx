@@ -11,23 +11,24 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
+
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const registerHandler = (user) => {
     user.id = nanoid();
     user.isAdmin = false;
     dispatch(asyncregisteruser(user));
-    navigate("/login")
+    navigate("/login");
+    reset();
   };
 
   return (
-    <div className="flex flex-col w-full h-full items-center justify-center p-10">
-      <form
-        onSubmit={handleSubmit(registerHandler)}
-        className="w-full md:w-[50vw] lg:w-[30vw] flex flex-col items-center justify-center gap-5 p-5  border-1 border-[#D4E80D] rounded-2xl"
-      >
+    <form
+      onSubmit={handleSubmit(registerHandler)}
+      className="flex flex-col w-full h-screen items-center justify-center px-5 py-24"
+    >
+      <div className="w-full md:w-[50vw] xl:w-[30vw] flex flex-col items-center justify-center gap-5 p-5  border-1 border-[#D4E80D] rounded-2xl">
         {/* username */}
         <div className="w-full flex flex-col items-start justify-center">
           <span className="text-[#D4E80D] text-[13px] pl-5">
@@ -82,8 +83,8 @@ const Register = () => {
             Login
           </Link>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
