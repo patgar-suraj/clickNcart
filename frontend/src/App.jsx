@@ -11,7 +11,7 @@ const App = () => {
   useEffect(() => {
     dispatch(asynccurrentuser())
     dispatch(asyncLoadProduct())
-  }, [])
+  }, [dispatch])
   return (
     <div className="relative w-screen">
       <Nav />

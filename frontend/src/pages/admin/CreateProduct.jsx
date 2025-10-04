@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { asyncCreateProduct } from "../../store/actions/productActions";
+import { toast } from "react-toastify";
 
 const CreateProduct = () => {
   const {
@@ -22,6 +23,7 @@ const CreateProduct = () => {
     product.id = nanoid();
     dispatch(asyncCreateProduct(product));
     navigate("/products");
+    toast.success("Product Created!")
     reset();
   };
 
@@ -31,6 +33,7 @@ const CreateProduct = () => {
 
   return (
     <div className="flex flex-col md:flex-row w-full items-center md:items-start justify-center gap-5 px-5 pt-14 pb-24">
+      {/* product image preview */}
       <div className="w-[60vw] md:w-[40vw] xl:w-[20vw] flex items-center justify-center">
         {imgPreview ? (
           <img

@@ -22,7 +22,11 @@ const Nav = () => {
           }
         >
           {({ isActive }) =>
-            isActive ? <span className="text-xl md:text-3xl xl:text-xl">HOME</span> : <RiHome3Line className="text-3xl md:text-5xl xl:text-3xl" />
+            isActive ? (
+              <span className="text-xl md:text-3xl xl:text-xl">HOME</span>
+            ) : (
+              <RiHome3Line className="text-3xl md:text-5xl xl:text-3xl" />
+            )
           }
         </NavLink>
 
@@ -63,10 +67,7 @@ const Nav = () => {
                 )
               }
             </NavLink>
-          </>
-        ) : user ? (
-          <>
-            {/* login */}
+            {/* user profile */}
             <NavLink
               to="/profile"
               className={({ isActive }) =>
@@ -76,7 +77,35 @@ const Nav = () => {
               }
             >
               {({ isActive }) =>
-                isActive ? <span className="text-xl md:text-3xl xl:text-xl">PROFILE</span> : <FiUser className="text-3xl md:text-5xl xl:text-3xl" />
+                isActive ? (
+                  <span className="text-xl md:text-3xl xl:text-xl">
+                    PROFILE
+                  </span>
+                ) : (
+                  <FiUser className="text-3xl md:text-5xl xl:text-3xl" />
+                )
+              }
+            </NavLink>
+          </>
+        ) : user ? (
+          <>
+            {/* user profile */}
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                `font-semibold hover:text-[#D4E80D] w-full p-5 flex items-center justify-center ${
+                  isActive ? "text-[#D4E80D] bg-[#1C1A1B] rounded" : ""
+                }`
+              }
+            >
+              {({ isActive }) =>
+                isActive ? (
+                  <span className="text-xl md:text-3xl xl:text-xl">
+                    PROFILE
+                  </span>
+                ) : (
+                  <FiUser className="text-3xl md:text-5xl xl:text-3xl" />
+                )
               }
             </NavLink>
           </>
@@ -92,7 +121,11 @@ const Nav = () => {
               }
             >
               {({ isActive }) =>
-                isActive ? <span className="text-xl md:text-3xl xl:text-xl">LOGIN</span> : <FiUser  className="text-3xl md:text-5xl xl:text-3xl" />
+                isActive ? (
+                  <span className="text-xl md:text-3xl xl:text-xl">LOGIN</span>
+                ) : (
+                  <FiUser className="text-3xl md:text-5xl xl:text-3xl" />
+                )
               }
             </NavLink>
           </>

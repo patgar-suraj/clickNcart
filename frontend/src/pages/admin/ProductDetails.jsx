@@ -2,10 +2,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingPage from "../../loading/LoadingPage";
 import { useSelector } from "react-redux";
 import { CgArrowLongRightR } from "react-icons/cg";
-import { CgArrowsExpandUpLeft } from "react-icons/cg";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FiArrowLeft } from "react-icons/fi";
 
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import {
   asyncDeleteProduct,
   asyncUpdateProduct,
 } from "../../store/actions/productActions";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const ProductDetails = () => {
     userReducer: { userData },
   } = useSelector((state) => state);
   const product = productData?.find((product) => product.id == id);
-  
+
   const [rating, setRating] = useState("");
   const [size, setSize] = useState("");
 
@@ -42,37 +43,48 @@ const ProductDetails = () => {
     },
   });
 
+  useEffect(() => {
+    if (product) {
+      reset({
+        image: product?.image,
+        title: product?.title,
+        desc: product?.desc,
+        category: product?.category,
+        price: product?.price,
+      });
+    }
+  }, [product, reset]);
+
   const watchedImage = watch("image", product?.image);
 
   const dispatch = useDispatch();
 
   const updateHandler = (product) => {
     dispatch(asyncUpdateProduct(id, product));
+    toast.success("Product Updated!")
     reset();
   };
-
+  
   const navigate = useNavigate();
   const deleteHandler = () => {
     dispatch(asyncDeleteProduct(id));
+    toast.success("Product Deleted!")
     navigate("/products");
   };
 
   return product ? (
-    <div className="w-full px-3 md:px-20 xl:px-40 pb-24">
-      <div className="w-full flex items-center font-bold text-2xl md:text-4xl justify-between py-5 md:py-7 xl:py-10">
-        <Link to={"/products"}>
-          <CgArrowsExpandUpLeft className="hover:text-[#D4E80D] active:text-[#D4E80D]" />
+    <div className="w-full md:px-5 pb-24">
+      <div className="w-full flex items-center justify-between gap-3 px-5 md:px-0 py-5 lg:pt-9 md:pb-10 xl:pb-14">
+        <Link to="/products">
+          <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
         </Link>
-
-        <span>Details</span>
-
-        <Link to={"/products"}>
-          <MdOutlineShoppingCart className="hover:text-[#D4E80D] active:text-[#D4E80D]" />
-        </Link>
+        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold">Details</h2>
+        {/* cart */}
+        <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
       </div>
 
       {/* product */}
-      <div className="w-full flex flex-col md:flex-row items-center justify-center md:justify-start md:items-start md:gap-10">
+      <div className="w-full flex flex-col px-5 md:flex-row items-center justify-center md:justify-start md:items-start md:gap-10">
         <div className="w-full h-full flex flex-col">
           <div className="w-full flex items-center justify-center">
             <img
@@ -81,7 +93,7 @@ const ProductDetails = () => {
               className="h-[50vh] md:h-[35vh] xl:h-[70vh] object-cover rounded-4xl "
             />
           </div>
-          <div className="w-full flex flex-col items-center justify-center py-10 gap-5">
+          <div className="w-full flex flex-col items-center justify-center md:px-[20px] lg:px-[50px] xl:px-[144px] py-10 gap-5">
             <button className="w-full cursor-pointer text-xl flex items-center justify-center active:scale-[0.98] bg-[#D4E80D] border-transparent py-2 px-5 text-black font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#D4E80D]">
               Buy now <CgArrowLongRightR className="text-2xl mt-2 ml-2" />
             </button>
