@@ -73,12 +73,12 @@ const ProductDetails = () => {
   };
 
   return product ? (
-    <div className="w-full md:px-5 pb-24">
-      <div className="w-full flex items-center justify-between gap-3 px-5 md:px-0 py-5 lg:pt-9 md:pb-10 xl:pb-14">
+    <div className="w-full relative md:px-5 py-24 md:py-32">
+      <div className="w-full fixed top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
         <Link to="/products">
           <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
         </Link>
-        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold">Details</h2>
+        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">Details</h2>
         {/* cart */}
         <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
       </div>
@@ -105,7 +105,7 @@ const ProductDetails = () => {
 
         <div className="w-full flex flex-col md:gap-5 items-start justify-start">
           <div className="w-full flex md:flex-col items-start gap-3 md:gap-6 justify-between my-2">
-            <h1 className="text-3xl font-bold"> {product.title} </h1>
+            <h1 className="capitalize text-3xl font-bold"> {product.title} </h1>
             <h2 className="bg-[#343338] text-xl font-bold flex items-center justify-center py-2 px-5 text-[#D4E80D] rounded-full ">
               {" "}
               ₹{product.price}{" "}
@@ -113,8 +113,8 @@ const ProductDetails = () => {
           </div>
 
           <div className="w-full flex flex-col items-start justify-start">
-            <span className="text-xl font-semibold"> {product.category} </span>
-            <p className="my-2 text-white/70"> {product.desc} </p>
+            <span className="capitalize text-xl font-semibold"> {product.category} </span>
+            <p className="capitalize my-2 text-white/70"> {product.desc} </p>
           </div>
 
           {/* size selection */}

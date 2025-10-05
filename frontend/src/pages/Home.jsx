@@ -14,8 +14,8 @@ const Home = () => {
     toast.success("👋 You have been logged out!");
   };
   return (
-    <div className="w-full h-screen p-5">
-      <div className="w-full flex items-center justify-center gap-3">
+    <div className="w-full h-screen p-5 py-24 md:py-32">
+      <div className="w-full flex items-center justify-center fixed top-0 left-0 bg-black border-b-1 border-white/20 z-10 gap-3 px-5 py-5">
         {/* logo */}
         <img
           src="/logo/logo.png"

@@ -26,8 +26,8 @@ const Products = () => {
         </div>
 
         <div className="w-full p-2 break-all flex items-center justify-start  flex-col gap-1">
-          <h1 className="text-xl font-bold"> {product.title} </h1>
-          <p className="font-semibold"> {product.category} </p>
+          <h1 className="capitalize text-xl font-bold"> {product.title} </h1>
+          <p className="capitalize font-semibold"> {product.category} </p>
           <h2 className="text-lg font-bold text-[#D4E80D]">
             {" "}
             ₹{product.price}{" "}
@@ -38,8 +38,8 @@ const Products = () => {
   });
 
   return products.length > 0 ? (
-    <div className="w-full flex flex-col">
-      <div className="w-full flex items-center justify-center gap-3 px-5 py-5">
+    <div className="w-full flex flex-col py-24 md:py-32">
+      <div className="w-full flex items-center justify-center fixed top-0 left-0 bg-black border-b-1 border-white/20 z-10 gap-3 px-5 py-5">
         {/* logo */}
         <img
           src="/logo/logo.png"
