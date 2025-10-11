@@ -17,10 +17,9 @@ import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const {
-    productReducer: { productData },
-    userReducer: { userData },
-  } = useSelector((state) => state);
+  const userData = useSelector((state) => state.userReducer.userData);
+  
+  const productData = useSelector((state) => state.productReducer.productData);
   const product = productData?.find((product) => product.id == id);
 
   const [rating, setRating] = useState("");
@@ -61,14 +60,14 @@ const ProductDetails = () => {
 
   const updateHandler = (product) => {
     dispatch(asyncUpdateProduct(id, product));
-    toast.success("Product Updated!")
+    toast.success("Product Updated!");
     reset();
   };
-  
+
   const navigate = useNavigate();
   const deleteHandler = () => {
     dispatch(asyncDeleteProduct(id));
-    toast.success("Product Deleted!")
+    toast.success("Product Deleted!");
     navigate("/products");
   };
 
@@ -78,7 +77,9 @@ const ProductDetails = () => {
         <Link to="/products">
           <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
         </Link>
-        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">Details</h2>
+        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
+          Details
+        </h2>
         {/* cart */}
         <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
       </div>
@@ -113,7 +114,10 @@ const ProductDetails = () => {
           </div>
 
           <div className="w-full flex flex-col items-start justify-start">
-            <span className="capitalize text-xl font-semibold"> {product.category} </span>
+            <span className="capitalize text-xl font-semibold">
+              {" "}
+              {product.category}{" "}
+            </span>
             <p className="capitalize my-2 text-white/70"> {product.desc} </p>
           </div>
 

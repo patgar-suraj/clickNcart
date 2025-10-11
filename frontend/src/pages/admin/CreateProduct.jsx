@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { asyncCreateProduct } from "../../store/actions/productActions";
 import { toast } from "react-toastify";
 import { FiArrowLeft } from "react-icons/fi";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { IoCreateOutline } from "react-icons/io5";
 
 const CreateProduct = () => {
   const {
@@ -44,7 +44,7 @@ const CreateProduct = () => {
             Create Product
           </h2>
           {/* cart */}
-          <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+          <IoCreateOutline className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
         </div>
 
         {/* product image preview */}
@@ -63,7 +63,7 @@ const CreateProduct = () => {
 
         <form
           onSubmit={handleSubmit(createHandler)}
-          className="w-full md:w-[60vw] xl:w-1/2 flex flex-col items-center justify-center gap-5 p-5  border-1 border-[#D4E80D] rounded-2xl"
+          className="w-full md:w-[60vw] xl:w-1/2 flex bg-[#131313] flex-col items-center justify-center gap-5 p-5  border-1 border-[#D4E80D] rounded-2xl"
         >
           {/* product image */}
           <div className="w-full flex flex-col items-start justify-center">
@@ -77,7 +77,7 @@ const CreateProduct = () => {
               })}
               type="url"
               placeholder="product image url"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-r focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
 
@@ -93,7 +93,7 @@ const CreateProduct = () => {
               })}
               type="text"
               placeholder="product name"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-r focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
 
@@ -109,7 +109,7 @@ const CreateProduct = () => {
               })}
               type="desc"
               placeholder="Product description"
-              className="outline-0 w-full min-h-[20vh] max-h-[40vh] border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             ></textarea>
           </div>
 
@@ -125,7 +125,7 @@ const CreateProduct = () => {
               })}
               type="text"
               placeholder="Product category"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
 
@@ -142,7 +142,7 @@ const CreateProduct = () => {
               type="number"
               step="0.01"
               placeholder="product price"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
 

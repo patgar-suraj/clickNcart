@@ -1,18 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
-import { asynclogoutuser } from "../store/actions/userActions";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { RiHome3Line } from "react-icons/ri";
 import { BiSearchAlt } from "react-icons/bi";
-import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 const Home = () => {
   const user = useSelector((state) => state.userReducer.userData);
 
-  const dispatch = useDispatch();
-  const logOutHandler = () => {
-    dispatch(asynclogoutuser());
-    toast.success("👋 You have been logged out!");
-  };
   return (
     <div className="w-full h-screen p-5 py-24 md:py-32">
       <div className="w-full flex items-center justify-center fixed top-0 left-0 bg-black border-b-1 border-white/20 z-10 gap-3 px-5 py-5">
@@ -36,22 +29,22 @@ const Home = () => {
 
           {user ? (
             <>
-              {/* cart */}
-              <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
-              <button
-                onClick={logOutHandler}
-                className="relative bg-[#e80d0d] hidden md:block cursor-pointer border-transparent py-2 px-5 text-sm text-black font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#e80d0d]"
-              >
-                LOGOUT
-              </button>
+              <RiHome3Line
+                className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]"
+              />
             </>
           ) : (
-            <Link
-              to={"/login"}
-              className="relative bg-[#D4E80D] hidden md:block cursor-pointer border-transparent py-2 px-5 text-sm text-black font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#D4E80D]"
-            >
-              LOGIN
-            </Link>
+            <>
+              <Link
+                to={"/login"}
+                className="relative bg-[#D4E80D] hidden md:block cursor-pointer border-transparent py-2 px-5 text-sm text-black font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#D4E80D]"
+              >
+                LOGIN
+              </Link>
+              <RiHome3Line
+                className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]"
+              />
+            </>
           )}
         </div>
       </div>

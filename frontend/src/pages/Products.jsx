@@ -1,13 +1,35 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingPage from "../loading/LoadingPage";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { PiCoatHangerFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { BiSearchAlt } from "react-icons/bi";
+import { asyncUpdateUser } from "../store/actions/userActions";
+import { toast } from "react-toastify";
 
 const Products = () => {
-  const products = useSelector((state) => state.productReducer.productData);
+  const user = useSelector((state) => state.userReducer.userData);
+  const dispatch = useDispatch();
 
-  const renderProduct = products.map((product) => {
+  const userData = useSelector((state) => state.userReducer.userData);
+  const productData = useSelector((state) => state.productReducer.productData);
+
+  const addToCartHandler = (product) => {
+    const copyuser = { ...userData, cart: [...userData.cart] };
+    const x = copyuser.cart.findIndex((c) => c?.product?.id == product.id);
+    if (x == -1) {
+      copyuser.cart.unshift({ product, quantity: 1 });
+    } else {
+      copyuser.cart[x] = {
+        product,
+        quantity: copyuser.cart[x].quantity + 1,
+      };
+    }
+    dispatch(asyncUpdateUser(copyuser.id, copyuser));
+    toast.success("🛒Item added to cart");
+  };
+
+  const renderProduct = productData.map((product) => {
     return (
       <Link
         to={`/product/${product.id}`}
@@ -21,7 +43,14 @@ const Products = () => {
             alt="product image"
           />
           <div>
-            <MdOutlineShoppingCart className="absolute bottom-5 right-5 text-black bg-white hover:bg-[#D4E80D] rounded-full p-1 text-4xl" />
+            <MdOutlineShoppingCart
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addToCartHandler(product);
+              }}
+              className="absolute bottom-5 right-5 text-black bg-white hover:bg-[#D4E80D] active:scale-[0.96] rounded-full p-1 text-4xl"
+            />
           </div>
         </div>
 
@@ -37,7 +66,7 @@ const Products = () => {
     );
   });
 
-  return products.length > 0 ? (
+  return productData.length > 0 ? (
     <div className="w-full flex flex-col py-24 md:py-32">
       <div className="w-full flex items-center justify-center fixed top-0 left-0 bg-black border-b-1 border-white/20 z-10 gap-3 px-5 py-5">
         {/* logo */}
@@ -57,8 +86,8 @@ const Products = () => {
             <div className="w-[2px] h-[7vw] md:h-[5vw] lg:h-[2vw] bg-black"></div>
             <BiSearchAlt className="text-3xl cursor-pointer hover:text-black/80 active:scale-[0.96]" />
           </div>
-          {/* cart */}
-          <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+          {/* main nav cart */}
+          <PiCoatHangerFill className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
         </div>
       </div>
       <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5 px-3 lg:px-6 pt-5 lg:pt-10 pb-24 overflow-hidden">

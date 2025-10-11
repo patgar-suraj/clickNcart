@@ -7,21 +7,50 @@ import PageNotFound from "../pages/PageNotFound";
 import CreateProduct from "../pages/admin/CreateProduct";
 import ProductDetails from "../pages/admin/ProductDetails";
 import UserProfile from "../pages/user/UserProfile";
-import { useSelector } from "react-redux";
+import Authrouter from "./Authrouter";
+import Cart from "../pages/Cart";
 
 const Mainroutes = () => {
-  // const {userData} = useSelector((state) => state.userReducer)
-
   return (
     <Routes>
       <Route path="*" element={<PageNotFound />} />
       <Route path="/" element={<Home />} />
       <Route path="/products" element={<Products />} />
-      <Route path="/admin/create-product" element={<CreateProduct />} />
-      <Route path="/product/:id" element={<ProductDetails />} />
+
+      <Route
+        path="/admin/create-product"
+        element={
+          <Authrouter>
+            <CreateProduct />
+          </Authrouter>
+        }
+      />
+      <Route
+        path="/product/:id"
+        element={
+          <Authrouter>
+            <ProductDetails />
+          </Authrouter>
+        }
+      />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/profile" element={<UserProfile />} />
+      <Route
+        path="/profile"
+        element={
+          <Authrouter>
+            <UserProfile />
+          </Authrouter>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <Authrouter>
+            <Cart />
+          </Authrouter>
+        }
+      />
     </Routes>
   );
 };

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import LoadingPage from "../../loading/LoadingPage";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { FiUser } from "react-icons/fi";
 import {
   asyncDeleteUser,
   asynclogoutuser,
@@ -63,7 +63,6 @@ const UserProfile = () => {
   }, [watchedImage, userData]);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const toBase = (file) =>
     new Promise((resolve, reject) => {
@@ -95,6 +94,7 @@ const UserProfile = () => {
       toast.error("Failed to update profile!");
     }
   };
+  const navigate = useNavigate;
 
   const logOutHandler = () => {
     dispatch(asynclogoutuser());
@@ -124,14 +124,16 @@ const UserProfile = () => {
         <Link to="/products">
           <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
         </Link>
-        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">Profile</h2>
+        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
+          Profile
+        </h2>
         {/* cart */}
-        <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+        <FiUser className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
       </div>
 
       <form
         onSubmit={handleSubmit(updateUserHandler)}
-        className="relative w-full md:w-[60vw] xl:w-[40%] flex flex-col items-center justify-center gap-5 p-5  border-1 border-[#D4E80D] rounded-4xl"
+        className="relative w-full md:w-[60vw] xl:w-[40%] flex flex-col items-center justify-center gap-5 p-5 bg-[#1a1a1abc]  border-1 border-[#D4E80D] rounded-4xl"
       >
         {/* image preview */}
         {/* user image input */}
@@ -183,7 +185,7 @@ const UserProfile = () => {
                 <button
                   type="button"
                   onClick={deleteHandler}
-                  className="relative bg-[#e80d0d] cursor-pointer border-transparent my-5 py-2 px-5 text-black font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#e80d0d]"
+                  className="relative bg-[#e80d0d] cursor-pointer border-transparent my-5 py-2 px-5 text-white font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#e80d0d]"
                 >
                   OK
                 </button>
@@ -204,7 +206,7 @@ const UserProfile = () => {
             })}
             type="text"
             placeholder="username"
-            className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-r focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
           />
         </div>
 
@@ -220,7 +222,7 @@ const UserProfile = () => {
             })}
             type="email"
             placeholder="email"
-            className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
           />
         </div>
 
@@ -236,7 +238,7 @@ const UserProfile = () => {
             })}
             type="password"
             placeholder="password"
-            className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
           />
         </div>
 
@@ -249,7 +251,7 @@ const UserProfile = () => {
           {/* logout */}
           <button
             onClick={logOutHandler}
-            className="relative bg-[#e80d0d] cursor-pointer border-transparent my-5 py-2 px-5 text-black font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#e80d0d]"
+            className="relative bg-[#e80d0d] cursor-pointer border-transparent my-5 py-2 px-5 text-white font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#e80d0d]"
           >
             LOGOUT
           </button>

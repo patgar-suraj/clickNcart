@@ -1,5 +1,6 @@
 import axios from "../../api/axiosconfig";
 import { loaduser, removeuser } from "../reducres/userSlice";
+import { toast } from "react-toastify";
 
 // register user
 export const asyncregisteruser = (user) => async (dispatch, getState) => {
@@ -7,7 +8,6 @@ export const asyncregisteruser = (user) => async (dispatch, getState) => {
     const res = await axios.post("/users", user);
     localStorage.setItem("user", JSON.stringify(data));
     dispatch(loaduser(data));
-    console.log(res);
   } catch (error) {
     console.log(error);
   }
@@ -21,17 +21,15 @@ export const asyncloginuser = (user) => async (dispatch, getState) => {
     );
     if (data.length > 0) {
       const loggedInUser = data[0];
-
-      // Save to localStorage + Redux
-      localStorage.setItem("user", JSON.stringify(loggedInUser));
       dispatch(loaduser(loggedInUser));
-
-      console.log("Logged in User:", loggedInUser);
+      localStorage.setItem("user", JSON.stringify(loggedInUser));
+      return { success: "true", user: loggedInUser };
     } else {
-      console.log("Invalid email or password");
+      return { success: "false" };
     }
   } catch (error) {
-    console.log(error);
+    toast.error("Something went wrong while logging in!");
+    return { success: "false" };
   }
 };
 
@@ -40,7 +38,6 @@ export const asynclogoutuser = (user) => async (dispatch, getState) => {
   try {
     localStorage.removeItem("user");
     dispatch(removeuser());
-    console.log("User Logged out");
   } catch (error) {
     console.log(error);
   }
@@ -54,7 +51,6 @@ export const asynccurrentuser = () => async (dispatch, getState) => {
       dispatch(loaduser(user));
     } else {
       dispatch(loaduser(null));
-      console.log("User not logged in");
     }
   } catch (error) {
     console.log(error);
@@ -67,7 +63,6 @@ export const asyncUpdateUser = (id, user) => async (dispatch, getState) => {
     const { data } = await axios.patch("/users/" + id, user);
     localStorage.setItem("user", JSON.stringify(data));
     dispatch(asynccurrentuser());
-    console.log("Updated User:", data);
   } catch (error) {
     console.log("error", error);
   }
@@ -76,8 +71,8 @@ export const asyncUpdateUser = (id, user) => async (dispatch, getState) => {
 // delete user
 export const asyncDeleteUser = (id) => async (dispatch, getState) => {
   try {
-    await axios.delete("/users/" + id)
-    dispatch(asynclogoutuser())
+    await axios.delete("/users/" + id);
+    dispatch(asynclogoutuser());
   } catch (error) {
     console.log("error", error);
   }

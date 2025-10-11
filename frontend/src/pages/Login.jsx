@@ -1,12 +1,15 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { asyncloginuser } from "../store/actions/userActions";
 import { toast } from "react-toastify";
 import { FiArrowLeft } from "react-icons/fi";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { GiClothesline } from "react-icons/gi";
 
 const Login = () => {
+  const user = useSelector((state) => state.userReducer.userData);
+
   const {
     register,
     reset,
@@ -16,10 +19,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const loginHandler = (user) => {
-    dispatch(asyncloginuser(user));
-    toast.success("👋 Logged in successfully!");
-    navigate("/");
+  const loginHandler = async (user) => {
+    const result = await dispatch(asyncloginuser(user));
+    if (result.success) {
+      toast.success("👋 Logged in successfully!");
+      navigate("/");
+    } else {
+      toast.error("👾Invalid email or password!");
+    }
   };
 
   return (
@@ -32,7 +39,11 @@ const Login = () => {
           Login
         </h2>
         {/* cart */}
-        <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+        {user ? (
+          <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+        ) : (
+          <GiClothesline className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+        )}
       </div>
 
       <form

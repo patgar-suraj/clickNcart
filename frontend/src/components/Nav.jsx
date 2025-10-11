@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { RiHome3Line } from "react-icons/ri";
-import { AiOutlineProduct } from "react-icons/ai";
+import { MdOutlineShoppingCart } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { RiApps2AddLine } from "react-icons/ri";
-import { PiCoatHangerBold } from "react-icons/pi";
+import { PiCoatHangerFill } from "react-icons/pi";
 
 const Nav = () => {
   const user = useSelector((state) => state.userReducer.userData);
@@ -43,7 +43,7 @@ const Nav = () => {
             isActive ? (
               <span className="text-xl md:text-3xl xl:text-xl">EXPLORE</span>
             ) : (
-              <PiCoatHangerBold className="text-3xl md:text-5xl xl:text-3xl" />
+              <PiCoatHangerFill className="text-3xl md:text-5xl xl:text-3xl" />
             )
           }
         </NavLink>
@@ -86,6 +86,23 @@ const Nav = () => {
                 )
               }
             </NavLink>
+            {/* add to cart */}
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                `font-semibold hover:text-[#D4E80D] w-full p-5 flex items-center justify-center ${
+                  isActive ? "text-[#D4E80D] bg-[#1C1A1B] rounded" : ""
+                }`
+              }
+            >
+              {({ isActive }) =>
+                isActive ? (
+                  <span className="text-xl md:text-3xl xl:text-xl">Cart</span>
+                ) : (
+                  <MdOutlineShoppingCart className="text-3xl md:text-5xl xl:text-3xl" />
+                )
+              }
+            </NavLink>
           </>
         ) : user ? (
           <>
@@ -105,6 +122,23 @@ const Nav = () => {
                   </span>
                 ) : (
                   <FiUser className="text-3xl md:text-5xl xl:text-3xl" />
+                )
+              }
+            </NavLink>
+            {/* add to cart */}
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                `font-semibold hover:text-[#D4E80D] w-full p-5 flex items-center justify-center ${
+                  isActive ? "text-[#D4E80D] bg-[#1C1A1B] rounded" : ""
+                }`
+              }
+            >
+              {({ isActive }) =>
+                isActive ? (
+                  <span className="text-xl md:text-3xl xl:text-xl">Cart</span>
+                ) : (
+                  <MdOutlineShoppingCart className="text-3xl md:text-5xl xl:text-3xl" />
                 )
               }
             </NavLink>

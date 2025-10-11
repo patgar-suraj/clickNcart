@@ -1,15 +1,18 @@
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { asyncregisteruser } from "../store/actions/userActions";
 import { useEffect, useState } from "react";
 import { HiOutlineUser } from "react-icons/hi2";
 import { toast } from "react-toastify";
 import { FiArrowLeft } from "react-icons/fi";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { GiClothesline } from "react-icons/gi";
 
 const Register = () => {
+  const user = useSelector((state) => state.userReducer.userData);
+
   const {
     register,
     reset,
@@ -45,6 +48,7 @@ const Register = () => {
     user.id = nanoid();
     user.isAdmin = false;
     user.image = baseImg;
+    user.cart = [];
 
     dispatch(asyncregisteruser(user));
     navigate("/login");
@@ -64,7 +68,11 @@ const Register = () => {
           Register
         </h2>
         {/* cart */}
-        <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+        {user ? (
+          <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+        ) : (
+          <GiClothesline className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+        )}{" "}
       </div>
 
       <form
