@@ -1,7 +1,7 @@
 import { FiArrowLeft } from "react-icons/fi";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
 import { asyncUpdateUser } from "../store/actions/userActions";
@@ -12,6 +12,11 @@ const Cart = () => {
   const userData = useSelector((state) => state.userReducer.userData);
   const productData = useSelector((state) => state.productReducer.productData);
 
+  const navigate = useNavigate();
+  const goPrevious = () => {
+    navigate(-1);
+  };
+
   // Increase product quantity
   const increaseQuantity = (index, product) => {
     const copyuser = { ...userData, cart: [...userData.cart] };
@@ -21,7 +26,7 @@ const Cart = () => {
         quantity: copyuser.cart[index].quantity + 1,
       };
     } else {
-      toast.warn("We're sorry! Only 10 unit(s) allowed in each order")
+      toast.warn("We're sorry! Only 10 unit(s) allowed in each order");
     }
     dispatch(asyncUpdateUser(copyuser.id, copyuser));
   };
@@ -45,6 +50,7 @@ const Cart = () => {
       (item) => item.product.id !== productId
     );
     dispatch(asyncUpdateUser(copyuser.id, copyuser));
+    toast.dismiss();
     toast.success("🧩 Item removed from cart");
   };
 
@@ -67,7 +73,7 @@ const Cart = () => {
           Start adding products to your cart!
         </p>
         <Link
-          to="/products"
+          to="/"
           className="relative bg-[#D4E80D] cursor-pointer border-transparent my-5 py-2 px-5 text-black font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#D4E80D]"
         >
           Browse Products
@@ -156,9 +162,11 @@ const Cart = () => {
   return (
     <div className="w-full bg-black/60 px-3 py-24 md:py-32">
       <div className="w-full fixed z-10 top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
-        <Link to="/products">
-          <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
-        </Link>
+        <FiArrowLeft
+          onClick={goPrevious}
+          className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]"
+        />
+
         <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
           My Cart
         </h2>

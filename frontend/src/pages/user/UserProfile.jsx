@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoadingPage from "../../loading/LoadingPage";
 import { FiUser } from "react-icons/fi";
 import {
@@ -94,7 +94,11 @@ const UserProfile = () => {
       toast.error("Failed to update profile!");
     }
   };
-  const navigate = useNavigate;
+  const navigate = useNavigate();
+
+  const goPrevious = () => {
+    navigate(-1)
+  }
 
   const logOutHandler = () => {
     dispatch(asynclogoutuser());
@@ -121,9 +125,11 @@ const UserProfile = () => {
   return userData ? (
     <div className="w-full flex flex-col items-center justify-center md:gap-10 px-5 py-32">
       <div className="w-full fixed top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
-        <Link to="/products">
-          <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
-        </Link>
+        <FiArrowLeft
+          onClick={goPrevious}
+          className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]"
+        />
+
         <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
           Profile
         </h2>
@@ -172,7 +178,7 @@ const UserProfile = () => {
           {showConfirm && (
             <div className="absolute top-0 left-0 rounded-4xl z-10 w-full h-full flex flex-col items-center justify-center bg-black/90">
               <p className="text-2xl text-center font-semibold text-[#D4E80D]">
-                Are you sure to delete account?
+                Are you sure to delete your account?
               </p>
               <div className="w-full flex items-center justify-center gap-5 my-10">
                 <div

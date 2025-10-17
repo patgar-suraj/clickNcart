@@ -29,12 +29,17 @@ const Login = () => {
     }
   };
 
+  const goPrevious = () => {
+    navigate("/");
+  };
+
   return (
     <>
       <div className="w-full fixed top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
-        <Link to="/products">
-          <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
-        </Link>
+        <FiArrowLeft
+          onClick={goPrevious}
+          className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]"
+        />
         <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
           Login
         </h2>
@@ -50,7 +55,7 @@ const Login = () => {
         onSubmit={handleSubmit(loginHandler)}
         className="flex flex-col w-full items-center justify-center px-5 py-32"
       >
-        <div className="w-full md:w-[50vw] xl:w-[30vw] flex flex-col items-center justify-center gap-5 px-5 py-7  border-1 border-[#D4E80D] rounded-2xl">
+        <div className="w-full md:w-[50vw] xl:w-[30vw] flex flex-col items-center justify-center gap-5 p-5 bg-[#1a1a1abc]  border-1 border-[#D4E80D] rounded-4xl">
           {/* email */}
           <div className="w-full  flex flex-col items-start justify-center">
             <span className="text-[#D4E80D] text-[13px] pl-5">
@@ -61,7 +66,7 @@ const Login = () => {
               {...register("email", { required: "[ Email is required ]" })}
               type="email"
               placeholder="johndoe@gmail.com"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
           {/* password */}
@@ -76,7 +81,7 @@ const Login = () => {
               })}
               type="password"
               placeholder="********"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
 

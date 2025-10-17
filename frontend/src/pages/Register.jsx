@@ -79,7 +79,8 @@ const Register = () => {
         onSubmit={handleSubmit(registerHandler)}
         className="flex flex-col w-full items-center justify-center px-5"
       >
-        <div className="w-[120px] h-[120px] mb-10 relative flex items-center justify-center rounded-full overflow-hidden border-2 border-[#D4E80D]">
+        {/* profile picture */}
+        <div className="w-[120px] h-[120px] mb-10 relative flex items-center justify-center rounded-full hover:bg-[#adff6e0b] overflow-hidden border-2 border-[#D4E80D]">
           <input
             {...register("image")}
             type="file"
@@ -102,7 +103,7 @@ const Register = () => {
           </label>
         </div>
 
-        <div className="w-full md:w-[50vw] xl:w-[30vw] flex flex-col items-center justify-center gap-5 p-5  border-1 border-[#D4E80D] rounded-2xl">
+        <div className="w-full md:w-[50vw] xl:w-[30vw] flex flex-col items-center justify-center gap-5 p-5 bg-[#1a1a1abc]  border-1 border-[#D4E80D] rounded-4xl">
           {/* username */}
           <div className="w-full flex flex-col items-start justify-center">
             <span className="text-[#D4E80D] text-[13px] pl-5">
@@ -115,9 +116,10 @@ const Register = () => {
               })}
               type="text"
               placeholder="john-doe"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-r focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
+
           {/* email */}
           <div className="w-full  flex flex-col items-start justify-center">
             <span className="text-[#D4E80D] text-[13px] pl-5">
@@ -128,10 +130,11 @@ const Register = () => {
               {...register("email", { required: "[ Email is required ]" })}
               type="email"
               placeholder="johndoe@gmail.com"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
-          {/* email */}
+
+          {/* password */}
           <div className="w-full  flex flex-col items-start justify-center">
             <span className="text-[#D4E80D] text-[13px] pl-5">
               {" "}
@@ -143,7 +146,7 @@ const Register = () => {
               })}
               type="password"
               placeholder="********"
-              className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
 

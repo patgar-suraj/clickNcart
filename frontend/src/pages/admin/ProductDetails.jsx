@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingPage from "../../loading/LoadingPage";
 import { useSelector } from "react-redux";
 import { CgArrowLongRightR } from "react-icons/cg";
@@ -6,7 +6,6 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
-
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import {
@@ -14,16 +13,40 @@ import {
   asyncUpdateProduct,
 } from "../../store/actions/productActions";
 import { toast } from "react-toastify";
+import { asyncUpdateUser } from "../../store/actions/userActions";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const userData = useSelector((state) => state.userReducer.userData);
-  
+
   const productData = useSelector((state) => state.productReducer.productData);
   const product = productData?.find((product) => product.id == id);
 
   const [rating, setRating] = useState("");
   const [size, setSize] = useState("");
+  const dispatch = useDispatch();
+
+  // add to cart
+
+  const addToCartHandler = (product) => {
+    if (!userData) {
+      toast.error("Please login to add items to your cart");
+      return;
+    }
+    const copyuser = { ...userData, cart: [...userData.cart] };
+    const x = copyuser.cart.findIndex((c) => c?.product?.id == product.id);
+    if (x == -1) {
+      copyuser.cart.unshift({ product, quantity: 1 });
+    } else {
+      copyuser.cart[x] = {
+        product,
+        quantity: copyuser.cart[x].quantity + 1,
+      };
+    }
+    dispatch(asyncUpdateUser(copyuser.id, copyuser));
+    toast.dismiss();
+    toast.success("🛒Item added to cart");
+  };
 
   // update product
   const {
@@ -56,8 +79,6 @@ const ProductDetails = () => {
 
   const watchedImage = watch("image", product?.image);
 
-  const dispatch = useDispatch();
-
   const updateHandler = (product) => {
     dispatch(asyncUpdateProduct(id, product));
     toast.success("Product Updated!");
@@ -65,23 +86,37 @@ const ProductDetails = () => {
   };
 
   const navigate = useNavigate();
+
+  const goPrevious = () => {
+    navigate(-1);
+  };
+
   const deleteHandler = () => {
     dispatch(asyncDeleteProduct(id));
     toast.success("Product Deleted!");
     navigate("/products");
   };
 
+  const goCart = () => {
+    navigate("/cart");
+  };
+
   return product ? (
     <div className="w-full relative md:px-5 py-24 md:py-32">
       <div className="w-full fixed top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
-        <Link to="/products">
-          <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
-        </Link>
+        <FiArrowLeft
+          onClick={goPrevious}
+          className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]"
+        />
+
         <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
           Details
         </h2>
         {/* cart */}
-        <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
+        <MdOutlineShoppingCart
+          onClick={goCart}
+          className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]"
+        />
       </div>
 
       {/* product */}
@@ -91,14 +126,18 @@ const ProductDetails = () => {
             <img
               src={watchedImage}
               alt="product image"
-              className="h-[50vh] md:h-[35vh] xl:h-[70vh] object-cover rounded-4xl "
+              className="w-[400px] h-[400px] object-contain rounded-4xl "
             />
           </div>
           <div className="w-full flex flex-col items-center justify-center md:px-[20px] lg:px-[50px] xl:px-[144px] py-10 gap-5">
             <button className="w-full cursor-pointer text-xl flex items-center justify-center active:scale-[0.98] bg-[#D4E80D] border-transparent py-2 px-5 text-black font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#D4E80D]">
               Buy now <CgArrowLongRightR className="text-2xl mt-2 ml-2" />
             </button>
-            <button className="w-full cursor-pointer text-xl flex items-center justify-center active:scale-[0.98] bg-[#e8d90d] border-transparent py-2 px-5 text-black font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#e8d90d]">
+            <button
+              disabled={!userData}
+              onClick={() => addToCartHandler(product)}
+              className="w-full cursor-pointer text-xl flex items-center justify-center active:scale-[0.98] bg-[#e8d90d] border-transparent py-2 px-5 text-black font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#e8d90d]"
+            >
               Add to Cart <MdOutlineShoppingCart className="text-2xl ml-2" />
             </button>
           </div>
@@ -106,7 +145,10 @@ const ProductDetails = () => {
 
         <div className="w-full flex flex-col md:gap-5 items-start justify-start">
           <div className="w-full flex md:flex-col items-start gap-3 md:gap-6 justify-between my-2">
-            <h1 className="capitalize text-3xl font-bold"> {product.title} </h1>
+            <h1 className="capitalize text-xl lg:text-2xl font-bold">
+              {" "}
+              {product.title}{" "}
+            </h1>
             <h2 className="bg-[#343338] text-xl font-bold flex items-center justify-center py-2 px-5 text-[#D4E80D] rounded-full ">
               {" "}
               ₹{product.price}{" "}
@@ -158,7 +200,7 @@ const ProductDetails = () => {
         <div className="flex flex-col w-full items-center justify-center px-5 pt-14 pb-24">
           <form
             onSubmit={handleSubmit(updateHandler)}
-            className="w-full md:w-[60vw] xl:w-1/2 flex flex-col items-center justify-center gap-5 p-5  border-1 border-[#D4E80D] rounded-2xl"
+            className="w-full md:w-[60vw] xl:w-1/2 flex flex-col items-center justify-center gap-5 p-5 bg-[#1a1a1abc]  border-1 border-[#D4E80D] rounded-4xl"
           >
             {/* product image */}
             <div className="w-full flex flex-col items-start justify-center">
@@ -172,7 +214,7 @@ const ProductDetails = () => {
                 })}
                 type="url"
                 placeholder="product image url"
-                className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-r focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               />
             </div>
 
@@ -188,7 +230,7 @@ const ProductDetails = () => {
                 })}
                 type="text"
                 placeholder="product name"
-                className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-r focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               />
             </div>
 
@@ -204,7 +246,7 @@ const ProductDetails = () => {
                 })}
                 type="desc"
                 placeholder="Product description"
-                className="outline-0 w-full min-h-[20vh] max-h-[40vh] border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full min-h-[8rem] max-h-[15rem] p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               ></textarea>
             </div>
 
@@ -220,7 +262,7 @@ const ProductDetails = () => {
                 })}
                 type="text"
                 placeholder="Product category"
-                className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               />
             </div>
 
@@ -237,7 +279,7 @@ const ProductDetails = () => {
                 type="number"
                 step="0.01"
                 placeholder="product price"
-                className="outline-0 w-full border-b-2 border-l-2 p-2 rounded-2xl border-[#1C1A1B] bg-gradient-to-tr from-[#1C1A1B] to-black font-semibold text-lg focus:bg-gradient-to-tr focus:from-[#D4E80D] focus:to-[#D4E80D] focus:border-[#302f30] focus:border-4 focus:text-black placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               />
             </div>
 

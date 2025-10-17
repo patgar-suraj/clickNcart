@@ -1,13 +1,107 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RiHome3Line } from "react-icons/ri";
 import { BiSearchAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import LoadingPage from "../loading/LoadingPage";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { asyncUpdateUser } from "../store/actions/userActions";
+import { toast } from "react-toastify";
+import { Suspense, useEffect, useState } from "react";
+import axios from "../api/axiosconfig";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Home = () => {
   const user = useSelector((state) => state.userReducer.userData);
+  const dispatch = useDispatch();
+
+  const userData = useSelector((state) => state.userReducer.userData);
+  const [productData, setProductData] = useState([]);
+  const [hasMore, sethasMore] = useState(true);
+
+  const fetchProducts = async () => {
+    try {
+      const { data } = await axios.get(
+        `/products?_limit=8&_start=${productData.length}`
+      );
+      if (data.length == 0) {
+        sethasMore(false);
+      } else {
+        sethasMore(true);
+        setProductData([...productData, ...data]);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Products Not Available!");
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const addToCartHandler = (product) => {
+    const copyuser = { ...userData, cart: [...userData.cart] };
+    const x = copyuser.cart.findIndex((c) => c?.product?.id == product.id);
+    if (x == -1) {
+      copyuser.cart.unshift({ product, quantity: 1 });
+    } else {
+      copyuser.cart[x] = {
+        product,
+        quantity: copyuser.cart[x].quantity + 1,
+      };
+    }
+    dispatch(asyncUpdateUser(copyuser.id, copyuser));
+    toast.dismiss();
+    toast.success("🛒Item added to cart");
+  };
+
+  const renderProduct = productData.map((product) => {
+    return (
+      <Link
+        to={`/product/${product.id}`}
+        key={product.id}
+        className="group w-full overflow-hidden flex flex-col items-start justify-start rounded-2xl transition-transform duration-200 border-[#D4E80D] hover:border-b-2 hover:-translate-y-2"
+      >
+        <div className="relative w-full h-60 md:h-72 bg-[#131313] p-1 md:p-2 flex items-start rounded-3xl rounded-br-3xl group-hover:rounded-br-sm justify-center overflow-hidden">
+          <img
+            src={product.image}
+            className="w-full h-full object-contain rounded-2xl group-hover:opacity-100 opacity-90"
+            alt="product image"
+          />
+          <div>
+            <MdOutlineShoppingCart
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addToCartHandler(product);
+              }}
+              className="absolute bottom-5 right-5 text-black bg-white hover:bg-[#D4E80D] active:scale-[0.96] rounded-full p-1 text-4xl"
+            />
+          </div>
+        </div>
+
+        <div className="w-full p-2 break-all flex items-center justify-start  flex-col gap-1">
+          <h1 className="capitalize text-xl font-semibold">
+            {" "}
+            {product.title.length > 28
+              ? `${product.title.slice(0, 28)}...`
+              : product.title}{" "}
+          </h1>
+          <p className="capitalize font-semibold text-white/60">
+            {" "}
+            {product.category}{" "}
+          </p>
+          <h2 className="text-lg font-bold text-[#D4E80D]">
+            {" "}
+            ₹{product.price}{" "}
+          </h2>
+        </div>
+      </Link>
+    );
+  });
 
   return (
-    <div className="w-full h-screen p-5 py-24 md:py-32">
+    <div className="w-full p-5 py-24 md:py-32">
       <div className="w-full flex items-center justify-center fixed top-0 left-0 bg-black border-b-1 border-white/20 z-10 gap-3 px-5 py-5">
         {/* logo */}
         <img
@@ -29,9 +123,7 @@ const Home = () => {
 
           {user ? (
             <>
-              <RiHome3Line
-                className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]"
-              />
+              <RiHome3Line className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
             </>
           ) : (
             <>
@@ -41,13 +133,34 @@ const Home = () => {
               >
                 LOGIN
               </Link>
-              <RiHome3Line
-                className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]"
-              />
+              <RiHome3Line className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
             </>
           )}
         </div>
       </div>
+
+      <InfiniteScroll
+        dataLength={productData.length}
+        next={fetchProducts}
+        loader={
+          <h4 className="text-[#D4E80D] md:text-2xl text-center font-semibold">
+            Loading...
+          </h4>
+        }
+        hasMore={hasMore}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            {" "}
+            <b className="text-[#D4E80D] font-semibold md:text-2xl">
+              ⪻ Yay! You have seen it all ⪼
+            </b>{" "}
+          </p>
+        }
+      >
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 xl:gap-10 px-3 lg:px-6 pt-5 lg:pt-10 pb-24 overflow-hidden">
+          <Suspense fallback={<LoadingPage />}>{renderProduct}</Suspense>
+        </div>
+      </InfiniteScroll>
     </div>
   );
 };
