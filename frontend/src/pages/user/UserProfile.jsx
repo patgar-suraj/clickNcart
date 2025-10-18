@@ -97,8 +97,8 @@ const UserProfile = () => {
   const navigate = useNavigate();
 
   const goPrevious = () => {
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   const logOutHandler = () => {
     dispatch(asynclogoutuser());
@@ -124,13 +124,13 @@ const UserProfile = () => {
 
   return userData ? (
     <div className="w-full flex flex-col items-center justify-center md:gap-10 px-5 py-32">
-      <div className="w-full fixed top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
+      <div className="w-full fixed z-10 top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
         <FiArrowLeft
           onClick={goPrevious}
           className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]"
         />
 
-        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
+        <h2 className="text-xl cursor-default md:text-3xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
           Profile
         </h2>
         {/* cart */}
@@ -143,7 +143,7 @@ const UserProfile = () => {
       >
         {/* image preview */}
         {/* user image input */}
-        <div className="w-[120px] h-[120px] mb-10 relative flex items-center justify-center rounded-full overflow-hidden border-2 border-[#D4E80D]">
+        <div className="w-[120px] h-[120px] relative flex items-center justify-center rounded-full overflow-hidden border-2 border-[#D4E80D]">
           <input
             {...register("image")}
             type="file"
@@ -165,7 +165,7 @@ const UserProfile = () => {
             )}
           </label>
         </div>
-        {/* delete */}
+        {/* delete user profile */}
         <div>
           <button
             type="button"
@@ -199,6 +199,10 @@ const UserProfile = () => {
             </div>
           )}
         </div>
+
+        <hr className="w-full border-dashed border-white/20" />
+        <hr className="w-[80%] border-dashed border-white/20" />
+        <hr className="w-[50%] border-dashed border-white/20" />
 
         {/* user name */}
         <div className="w-full flex flex-col items-start justify-center">

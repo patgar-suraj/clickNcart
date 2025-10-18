@@ -10,21 +10,28 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import {
   asyncDeleteProduct,
+  asyncLoadProduct,
   asyncUpdateProduct,
 } from "../../store/actions/productActions";
 import { toast } from "react-toastify";
 import { asyncUpdateUser } from "../../store/actions/userActions";
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const userData = useSelector((state) => state.userReducer.userData);
 
   const productData = useSelector((state) => state.productReducer.productData);
   const product = productData?.find((product) => product.id == id);
 
+  useEffect(() => {
+    if (!product) {
+      dispatch(asyncLoadProduct());
+    }
+  }, [dispatch, product]);
+
   const [rating, setRating] = useState("");
   const [size, setSize] = useState("");
-  const dispatch = useDispatch();
 
   // add to cart
 
@@ -62,6 +69,7 @@ const ProductDetails = () => {
       desc: product?.desc,
       category: product?.category,
       price: product?.price,
+      gender: product?.gender,
     },
   });
 
@@ -73,6 +81,7 @@ const ProductDetails = () => {
         desc: product?.desc,
         category: product?.category,
         price: product?.price,
+        gender: product?.gender,
       });
     }
   }, [product, reset]);
@@ -94,7 +103,7 @@ const ProductDetails = () => {
   const deleteHandler = () => {
     dispatch(asyncDeleteProduct(id));
     toast.success("Product Deleted!");
-    navigate("/products");
+    navigate("/");
   };
 
   const goCart = () => {
@@ -103,13 +112,14 @@ const ProductDetails = () => {
 
   return product ? (
     <div className="w-full relative md:px-5 py-24 md:py-32">
+      {/* upper nav */}
       <div className="w-full fixed top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
         <FiArrowLeft
           onClick={goPrevious}
           className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]"
         />
 
-        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
+        <h2 className="text-xl cursor-default md:text-3xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
           Details
         </h2>
         {/* cart */}
@@ -144,23 +154,24 @@ const ProductDetails = () => {
         </div>
 
         <div className="w-full flex flex-col md:gap-5 items-start justify-start">
-          <div className="w-full flex md:flex-col items-start gap-3 md:gap-6 justify-between my-2">
+          <div className="w-full flex md:flex-col items-start gap-3 justify-between">
             <h1 className="capitalize text-xl lg:text-2xl font-bold">
               {" "}
               {product.title}{" "}
             </h1>
-            <h2 className="bg-[#343338] text-xl font-bold flex items-center justify-center py-2 px-5 text-[#D4E80D] rounded-full ">
+            <h2 className="bg-[#343338] text-xl font-bold flex items-center justify-center my-3 py-2 px-5 text-[#D4E80D] rounded-full ">
               {" "}
               ₹{product.price}{" "}
             </h2>
           </div>
 
-          <div className="w-full flex flex-col items-start justify-start">
-            <span className="capitalize text-xl font-semibold">
+          <div className="w-full flex flex-col gap-2 items-start justify-start">
+            <span className="capitalize text-white/70">{product.gender}</span>
+            <span className="capitalize text-white/70">
               {" "}
               {product.category}{" "}
             </span>
-            <p className="capitalize my-2 text-white/70"> {product.desc} </p>
+            <p className="capitalize text-white/70"> {product.desc} </p>
           </div>
 
           {/* size selection */}
@@ -214,7 +225,7 @@ const ProductDetails = () => {
                 })}
                 type="url"
                 placeholder="product image url"
-              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+                className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               />
             </div>
 
@@ -230,7 +241,7 @@ const ProductDetails = () => {
                 })}
                 type="text"
                 placeholder="product name"
-              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+                className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               />
             </div>
 
@@ -246,7 +257,7 @@ const ProductDetails = () => {
                 })}
                 type="desc"
                 placeholder="Product description"
-              className="outline-0 w-full min-h-[8rem] max-h-[15rem] p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+                className="outline-0 w-full min-h-[8rem] max-h-[15rem] p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               ></textarea>
             </div>
 
@@ -262,7 +273,7 @@ const ProductDetails = () => {
                 })}
                 type="text"
                 placeholder="Product category"
-              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+                className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               />
             </div>
 
@@ -279,8 +290,35 @@ const ProductDetails = () => {
                 type="number"
                 step="0.01"
                 placeholder="product price"
-              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+                className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
               />
+            </div>
+
+            {/* product gender */}
+            <div className="w-full  flex flex-col items-start justify-center">
+              <span className="text-[#D4E80D] text-[13px] pl-5">
+                {" "}
+                {errors.gender && errors.gender.message}
+              </span>
+              <select
+                {...register("gender", {
+                  required: "[ Product gender is required ]",
+                })}
+                className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+              >
+                <option className="bg-black" value="men">
+                  Men
+                </option>
+                <option className="bg-black" value="women">
+                  Women
+                </option>
+                <option className="bg-black" value="boys">
+                  Boys
+                </option>
+                <option className="bg-black" value="girls">
+                  Girls
+                </option>
+              </select>
             </div>
 
             {/* button */}

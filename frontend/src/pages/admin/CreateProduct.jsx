@@ -33,14 +33,20 @@ const CreateProduct = () => {
     navigate("/products");
   };
 
+  const goPrevious = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="md:px-5 py-24 md:py-32">
       <div className="flex flex-col md:flex-row w-full items-center md:items-start justify-center gap-5 px-5">
+        {/* upper nav */}
         <div className="w-full fixed top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
-          <Link to="/products">
-            <FiArrowLeft className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]" />
-          </Link>
-          <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
+          <FiArrowLeft
+            onClick={goPrevious}
+            className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]"
+          />
+          <h2 className="text-xl cursor-default md:text-3xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
             Create Product
           </h2>
           {/* cart */}
@@ -109,7 +115,7 @@ const CreateProduct = () => {
               })}
               type="desc"
               placeholder="Product description"
-              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full min-h-[8rem] max-h-[15rem] p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             ></textarea>
           </div>
 
@@ -144,6 +150,27 @@ const CreateProduct = () => {
               placeholder="product price"
               className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
+          </div>
+
+          {/* product gender */}
+          <div className="w-full  flex flex-col items-start justify-center">
+            <select
+              {...register("gender")}
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+            >
+              <option className="bg-black" value="men">
+                Men
+              </option>
+              <option className="bg-black" value="women">
+                Women
+              </option>
+              <option className="bg-black" value="boys">
+                Boys
+              </option>
+              <option className="bg-black" value="girls">
+                Girls
+              </option>
+            </select>
           </div>
 
           {/* button */}

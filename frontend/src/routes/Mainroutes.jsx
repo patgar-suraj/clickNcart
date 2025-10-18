@@ -3,7 +3,7 @@ import { lazy } from "react";
 import UnAuthrouter from "./UnAuthrouter";
 
 const Home = lazy(() => import("../pages/Home"));
-const Products = lazy(() => import("../pages/Products"));
+const Explore = lazy(() => import("../pages/Explore"));
 const Login = lazy(() => import("../pages/Login"));
 const Register = lazy(() => import("../pages/Register"));
 const PageNotFound = lazy(() => import("../pages/PageNotFound"));
@@ -18,7 +18,7 @@ const Mainroutes = () => {
     <Routes>
       <Route path="*" element={<PageNotFound />} />
       <Route path="/" element={<Home />} />
-      <Route path="/products" element={<Products />} />
+      <Route path="/products" element={<Explore />} />
 
       <Route
         path="/admin/create-product"

@@ -87,7 +87,7 @@ const Cart = () => {
       <ul
         key={c.product.id}
         className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] items-center justify-center 
-        rounded-2xl rounded-br-3xl 
+        rounded-2xl md:rounded-br-3xl 
         bg-[#1a1a1abc] backdrop-blur-md border border-white/20 
         hover:bg-[#1A1A1A] transition-all p-2 shadow-lg"
       >
@@ -125,11 +125,15 @@ const Cart = () => {
 
             <div className="w-full flex flex-col gap-2 mt-5 items-start justify-start">
               <h1 className="capitalize font-semibold"> {c.product.title} </h1>
-              <h2 className="capitalize text-center px-2 font-semibold text-[#D4E80D] bg-white/10 backdrop-blur-sm rounded-full">
-                ₹{c.product.price * c.quantity}
+              <h2 className="capitalize text-center px-2 my-2 font-semibold text-[#D4E80D] bg-white/10 backdrop-blur-sm rounded-full">
+                ₹{(c.product.price * c.quantity).toLocaleString("en-IN")}
               </h2>
+              <span className="text-sm capitalize text-white/60">
+                {" "}
+                {c.product.gender}{" "}
+              </span>
               <span className="text-sm capitalize"> {c.product.category} </span>
-              <p className="capitalize text-sm text-white/70">
+              <p className="capitalize text-sm text-white/60">
                 {c.product.desc}
               </p>
             </div>
@@ -158,16 +162,31 @@ const Cart = () => {
     );
   });
 
+  const totalItems = userData?.cart?.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
+
+  const totalPrice = userData?.cart?.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  );
+
+  const deliveryCharge = totalPrice < 1000 ? 40 : 0;
+  const discountAmount = totalPrice > 2000 ? totalPrice * 0.1 : 0;
+  const finalAmount = totalPrice - discountAmount + deliveryCharge;
+
   // 🧾 Main cart layout
   return (
     <div className="w-full bg-black/60 px-3 py-24 md:py-32">
+      {/* upper nav */}
       <div className="w-full fixed z-10 top-0 left-0 bg-black border-b-1 border-white/20 flex items-center justify-between gap-3 px-5 py-5">
         <FiArrowLeft
           onClick={goPrevious}
           className="hover:text-[#D4E80D] cursor-pointer text-3xl active:scale-[0.96] active:text-[#D4E80D]"
         />
 
-        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
+        <h2 className="text-xl cursor-default md:text-3xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
           My Cart
         </h2>
         <MdOutlineShoppingCart className="hover:text-[#D4E80D] cursor-pointer text-4xl active:scale-[0.96] active:text-[#D4E80D]" />
@@ -180,6 +199,62 @@ const Cart = () => {
       ) : (
         <div className="flex flex-col w-full items-center justify-center gap-3">
           {cartItems}
+
+          <div className="mt-10 w-full flex flex-col items-center justify-center">
+            <span className="text-[#D4E80D]">
+            "Get free delivery on orders above ₹1000"
+          </span>
+          <span className="text-[#D4E80D]">
+            "Get a 10% discount on purchases above ₹2000"
+          </span>
+          </div>
+
+          <div className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] flex flex-col gap-2 rounded-2xl bg-[#1a1a1abc] backdrop-blur-md border border-white/20 p-4 shadow-lg">
+            <h1 className="text-white text-xl font-semibold border-b border-white/20 pb-2">
+              Price Details
+            </h1>
+            <div className="flex items-center justify-between text-white/80">
+              <p>
+                Price (<span className="text-[#D4E80D]">{totalItems}</span>{" "}
+                items)
+              </p>
+              <p>₹{totalPrice.toLocaleString("en-IN")}</p>
+            </div>
+            <div className="flex items-center justify-between text-white/80">
+              <p>Delivery Charges</p>
+              {deliveryCharge > 0 ? (
+                <p>₹{deliveryCharge.toLocaleString("en-IN")}</p>
+              ) : (
+                <p className="text-[#D4E80D]">FREE</p>
+              )}
+            </div>
+            <div className="flex items-center justify-between text-white/80">
+              <p>Discount</p>
+              {discountAmount > 0 ? (
+                <p className="text-[#D4E80D]">
+                  ₹{discountAmount.toLocaleString("en-IN")}
+                </p>
+              ) : (
+                <p>--</p>
+              )}
+            </div>
+
+            <hr className="border-dashed border-white/20" />
+
+            <div className="flex items-center justify-between text-white font-bold text-lg">
+              <p>Total Amount</p>
+              <p>₹{finalAmount.toLocaleString("en-IN")}</p>
+            </div>
+
+            <hr className="border-dashed border-white/20" />
+
+            <div className="flex items-center justify-center text-[#D4E80D]">
+              <p>
+                You will save ₹{discountAmount.toLocaleString("en-IN")} on this
+                order🎉
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>
