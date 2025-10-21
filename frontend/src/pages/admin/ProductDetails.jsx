@@ -175,7 +175,7 @@ const ProductDetails = () => {
           </div>
 
           {/* size selection */}
-          <div className="w-full flex items-center justify-start gap-3">
+          <div className="w-full flex mt-10 md:mt-3 items-center justify-start gap-3">
             {["S", "M", "L", "XL", "XXL"].map((s) => (
               <span
                 key={s}

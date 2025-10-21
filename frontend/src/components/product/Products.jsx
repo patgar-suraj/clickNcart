@@ -1,37 +1,11 @@
 import LoadingPage from "../../loading/LoadingPage";
-import { toast } from "react-toastify";
-import { lazy, Suspense, useEffect, useState } from "react";
-import axios from "../../api/axiosconfig";
+import { lazy, Suspense } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useDispatch, useSelector } from "react-redux";
-import { loadlazyproduct } from "../../store/reducres/productSlice";
+import useInfiniteProducts from "../../utils/useInfiniteProducts";
 const ProductTemp = lazy(() => import("./ProductTemp"));
 
 const Products = () => {
-  const dispatch = useDispatch();
-  const { productData } = useSelector((state) => state.productReducer);
-  const [hasMore, sethasMore] = useState(true);
-
-  const fetchProducts = async () => {
-    try {
-      const { data } = await axios.get(
-        `/products?_limit=10&_start=${productData.length}`
-      );
-      if (data.length == 0) {
-        sethasMore(false);
-      } else {
-        sethasMore(true);
-        dispatch(loadlazyproduct(data));
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Products Not Available!");
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const { productData, hasMore, fetchProducts } = useInfiniteProducts();
 
   return (
     <InfiniteScroll
@@ -47,7 +21,11 @@ const Products = () => {
         <div className="w-full p-3">
           <p style={{ textAlign: "center" }}>
             {" "}
-            <img src="./images/deals.jpg" alt="sale" className="rounded-lg my-5 lg:my-14" />
+            <img
+              src="./images/deals.jpg"
+              alt="sale"
+              className="rounded-lg my-5 lg:my-14"
+            />
             <b className="text-[#D4E80D] font-semibold md:text-2xl">
               ⪻ Yay! You have seen it all ⪼
             </b>{" "}

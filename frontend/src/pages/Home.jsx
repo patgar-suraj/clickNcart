@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { RiHome3Line } from "react-icons/ri";
-import { BiSearchAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Products from "../components/product/Products";
 import HeroSection from "../components/home/HeroSection";
 import { FaShopware } from "react-icons/fa6";
+import Search from "../components/search/Search";
 
 const Home = () => {
   const user = useSelector((state) => state.userReducer.userData);
@@ -15,7 +15,13 @@ const Home = () => {
       <div className="w-full flex items-center justify-between fixed top-0 left-0 bg-black border-b-1 border-white/20 z-10 gap-3 px-5 py-5">
         {/* logo */}
         <h2 className="text-xl cursor-default flex items-center justify-center gap-2 font-semibold text-[#D4E80D]">
-          <span className="hidden md:block">clickNcart</span> <FaShopware className="text-3xl" />
+          <div className="flex flex-col items-center justify-center">
+            <span className="hidden md:block">clickNcart</span>
+            <span className="hidden md:block text-[8px] -mt-1.5">
+              cloth store
+            </span>
+          </div>{" "}
+          <FaShopware className="text-3xl" />
         </h2>
         <h2 className="hidden lg:block text-xl cursor-default md:text-3xl font-semibold bg-gradient-to-t from-[#D4E80D] to-white text-transparent bg-clip-text pb-1">
           Home
@@ -23,15 +29,7 @@ const Home = () => {
 
         <div className="flex items-center justify-end gap-5 text-2xl md:text-2xl">
           {/* search input */}
-          <div className="transition-all duration-300 overflow-hidden flex w-[90%] md:w-[60vw] xl:w-[45vw] pr-2 gap-3 items-center justify-between bg-[#D4E80D] text-black rounded">
-            <input
-              type="text"
-              placeholder="search here..."
-              className="p-1 md:p-2 w-full ml-2 text-lg outline-none"
-            />
-            <div className="w-[2px] h-[7vw] md:h-[5vw] lg:h-[2vw] bg-black"></div>
-            <BiSearchAlt className="text-3xl cursor-pointer hover:text-black/80 active:scale-[0.96]" />
-          </div>
+          <Search />
 
           {user ? (
             <>

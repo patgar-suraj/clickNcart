@@ -30,11 +30,16 @@ const ProductTemp = ({ product }) => {
       key={product.id}
       className="group w-full overflow-hidden flex flex-col items-start justify-start hover:rounded-b-lg transition-transform duration-200 border-[#D4E80D] hover:border-b-2 hover:-translate-y-2"
     >
+      {/* image */}
       <div className="relative w-full h-48 md:h-60 lg:h-64 bg-[#131313] flex items-start rounded-lg  justify-center overflow-hidden">
         <img
           src={product.image}
           className="w-full h-full object-cover group-hover:opacity-100 opacity-90"
-          alt="product image"
+          alt={
+            product.title.length > 23
+              ? `${product.title.slice(0, 23)}...`
+              : product.title
+          }
         />
         <div>
           <MdOutlineShoppingCart
@@ -48,6 +53,7 @@ const ProductTemp = ({ product }) => {
         </div>
       </div>
 
+      {/* title / category / price */}
       <div className="w-full p-2 break-all flex items-center justify-start  flex-col gap-1">
         <h1 className="capitalize text-lg font-semibold">
           {" "}

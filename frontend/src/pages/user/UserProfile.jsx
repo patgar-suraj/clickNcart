@@ -201,8 +201,8 @@ const UserProfile = () => {
         </div>
 
         <hr className="w-full border-dashed border-white/20" />
-        <hr className="w-[80%] border-dashed border-white/20" />
-        <hr className="w-[50%] border-dashed border-white/20" />
+        <hr className="w-[80%] -mt-2 border-dashed border-white/20" />
+        <hr className="w-[50%] -mt-2 border-dashed border-white/20" />
 
         {/* user name */}
         <div className="w-full flex flex-col items-start justify-center">

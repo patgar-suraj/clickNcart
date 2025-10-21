@@ -119,22 +119,6 @@ const CreateProduct = () => {
             ></textarea>
           </div>
 
-          {/* product category */}
-          <div className="w-full  flex flex-col items-start justify-center">
-            <span className="text-[#D4E80D] text-[13px] pl-5">
-              {" "}
-              {errors.category && errors.category.message}
-            </span>
-            <input
-              {...register("category", {
-                required: "[ Product category is required ]",
-              })}
-              type="text"
-              placeholder="Product category"
-              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
-            />
-          </div>
-
           {/* product price */}
           <div className="w-full  flex flex-col items-start justify-center">
             <span className="text-[#D4E80D] text-[13px] pl-5">
@@ -148,16 +132,23 @@ const CreateProduct = () => {
               type="number"
               step="0.01"
               placeholder="product price"
-              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-medium text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             />
           </div>
 
           {/* product gender */}
           <div className="w-full  flex flex-col items-start justify-center">
+            <span className="text-[#D4E80D] text-[13px] pl-5">
+              {" "}
+              {errors.gender && errors.gender.message}
+            </span>
             <select
-              {...register("gender")}
-              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+              {...register("gender", { required: "[ Gender is required ]" })}
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-medium text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
             >
+              <option className="bg-black" value="">
+                Select Gender
+              </option>
               <option className="bg-black" value="men">
                 Men
               </option>
@@ -169,6 +160,33 @@ const CreateProduct = () => {
               </option>
               <option className="bg-black" value="girls">
                 Girls
+              </option>
+            </select>
+          </div>
+
+          {/* product category */}
+          <div className="w-full  flex flex-col items-start justify-center">
+            <span className="text-[#D4E80D] text-[13px] pl-5">
+              {" "}
+              {errors.category && errors.category.message}
+            </span>
+            <select
+              {...register("category", {
+                required: "[ Product category is required ]",
+              })}
+              className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-medium text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+            >
+              <option className="bg-black" value="">
+                Select Category
+              </option>
+              <option className="bg-black" value="shirt">
+                Shirt's
+              </option>
+              <option className="bg-black" value="pant">
+                Pant's
+              </option>
+              <option className="bg-black" value="hoodie">
+                Hoodie's
               </option>
             </select>
           </div>

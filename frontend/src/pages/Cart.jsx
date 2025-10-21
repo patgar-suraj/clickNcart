@@ -86,7 +86,7 @@ const Cart = () => {
     return (
       <ul
         key={c.product.id}
-        className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] items-center justify-center 
+        className="w-full items-center justify-center 
         rounded-2xl md:rounded-br-3xl 
         bg-[#1a1a1abc] backdrop-blur-md border border-white/20 
         hover:bg-[#1A1A1A] transition-all p-2 shadow-lg"
@@ -123,8 +123,13 @@ const Cart = () => {
               </div>
             </div>
 
-            <div className="w-full flex flex-col gap-2 mt-5 items-start justify-start">
-              <h1 className="capitalize font-semibold"> {c.product.title} </h1>
+            <div className="w-full flex flex-col gap-2 items-start justify-start">
+              <h1 className="capitalize font-semibold">
+                {" "}
+                {c.product.title.length > 50
+                  ? `${c.product.title.slice(0, 50)}...`
+                  : c.product.title}{" "}
+              </h1>
               <h2 className="capitalize text-center px-2 my-2 font-semibold text-[#D4E80D] bg-white/10 backdrop-blur-sm rounded-full">
                 ₹{(c.product.price * c.quantity).toLocaleString("en-IN")}
               </h2>
@@ -134,7 +139,9 @@ const Cart = () => {
               </span>
               <span className="text-sm capitalize"> {c.product.category} </span>
               <p className="capitalize text-sm text-white/60">
-                {c.product.desc}
+                {c.product.desc.length > 100
+                  ? `${c.product.desc.slice(0, 100)}...`
+                  : c.product.desc}
               </p>
             </div>
           </div>
@@ -197,62 +204,66 @@ const Cart = () => {
       ) : userData.cart.length === 0 ? (
         emptyCart()
       ) : (
-        <div className="flex flex-col w-full items-center justify-center gap-3">
-          {cartItems}
-
-          <div className="mt-10 w-full flex flex-col items-center justify-center">
-            <span className="text-[#D4E80D]">
-            "Get free delivery on orders above ₹1000"
-          </span>
-          <span className="text-[#D4E80D]">
-            "Get a 10% discount on purchases above ₹2000"
-          </span>
+        <div className="relative flex flex-col md:flex-row gap-5 lg:gap-15 lg:px-20  w-full items-start justify-center">
+          <div className="flex flex-col w-full lg:w-[60%] items-center justify-center gap-3">
+            {cartItems}
           </div>
 
-          <div className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] flex flex-col gap-2 rounded-2xl bg-[#1a1a1abc] backdrop-blur-md border border-white/20 p-4 shadow-lg">
-            <h1 className="text-white text-xl font-semibold border-b border-white/20 pb-2">
-              Price Details
-            </h1>
-            <div className="flex items-center justify-between text-white/80">
-              <p>
-                Price (<span className="text-[#D4E80D]">{totalItems}</span>{" "}
-                items)
-              </p>
-              <p>₹{totalPrice.toLocaleString("en-IN")}</p>
+          <div className="sticky top-24 w-full lg:w-[40%] flex flex-col gap-5 items-center justify-center">
+            <div className="w-full flex flex-col items-center justify-center gap-2 rounded-2xl bg-[#1a1a1abc] hover:bg-[#1A1A1A] transition-all backdrop-blur-md border border-white/20 p-4 shadow-lg">
+              <span className="text-[#D4E80D]">
+                "Get free delivery on orders above ₹1000"
+              </span>
+              <span className="text-[#D4E80D]">
+                "Get a 10% discount on purchases above ₹2000"
+              </span>
             </div>
-            <div className="flex items-center justify-between text-white/80">
-              <p>Delivery Charges</p>
-              {deliveryCharge > 0 ? (
-                <p>₹{deliveryCharge.toLocaleString("en-IN")}</p>
-              ) : (
-                <p className="text-[#D4E80D]">FREE</p>
-              )}
-            </div>
-            <div className="flex items-center justify-between text-white/80">
-              <p>Discount</p>
-              {discountAmount > 0 ? (
-                <p className="text-[#D4E80D]">
-                  ₹{discountAmount.toLocaleString("en-IN")}
+
+            <div className="w-full flex flex-col gap-2 rounded-2xl bg-[#1a1a1abc] hover:bg-[#1A1A1A] transition-all backdrop-blur-md border border-white/20 p-4 shadow-lg">
+              <h1 className="text-white text-xl font-semibold border-b border-white/20 pb-2">
+                Price Details
+              </h1>
+              <div className="flex items-center justify-between text-white/80">
+                <p>
+                  Price (<span className="text-[#D4E80D]">{totalItems}</span>{" "}
+                  items)
                 </p>
-              ) : (
-                <p>--</p>
-              )}
-            </div>
+                <p>₹{totalPrice.toLocaleString("en-IN")}</p>
+              </div>
+              <div className="flex items-center justify-between text-white/80">
+                <p>Delivery Charges</p>
+                {deliveryCharge > 0 ? (
+                  <p>₹{deliveryCharge.toLocaleString("en-IN")}</p>
+                ) : (
+                  <p className="text-[#D4E80D]">FREE</p>
+                )}
+              </div>
+              <div className="flex items-center justify-between text-white/80">
+                <p>Discount</p>
+                {discountAmount > 0 ? (
+                  <p className="text-[#D4E80D]">
+                    ₹{discountAmount.toLocaleString("en-IN")}
+                  </p>
+                ) : (
+                  <p>--</p>
+                )}
+              </div>
 
-            <hr className="border-dashed border-white/20" />
+              <hr className="border-dashed border-white/20" />
 
-            <div className="flex items-center justify-between text-white font-bold text-lg">
-              <p>Total Amount</p>
-              <p>₹{finalAmount.toLocaleString("en-IN")}</p>
-            </div>
+              <div className="flex items-center justify-between text-white font-bold text-lg">
+                <p>Total Amount</p>
+                <p>₹{finalAmount.toLocaleString("en-IN")}</p>
+              </div>
 
-            <hr className="border-dashed border-white/20" />
+              <hr className="border-dashed border-white/20" />
 
-            <div className="flex items-center justify-center text-[#D4E80D]">
-              <p>
-                You will save ₹{discountAmount.toLocaleString("en-IN")} on this
-                order🎉
-              </p>
+              <div className="flex items-center justify-center text-[#D4E80D]">
+                <p>
+                  You will save ₹{discountAmount.toLocaleString("en-IN")} on
+                  this order🎉
+                </p>
+              </div>
             </div>
           </div>
         </div>
