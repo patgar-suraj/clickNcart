@@ -158,7 +158,7 @@ const Cart = () => {
             <button
               className="cursor-pointer text-sm flex items-center justify-center active:scale-[0.96] 
               bg-[#D4E80D]/90 backdrop-blur-md border border-[#D4E80D]/50 py-2 px-5 text-black font-bold rounded-full 
-              transition-all duration-300 shadow-md hover:shadow-[0_0_8px_2px_#D4E80D]"
+              transition-all duration-300 shadow-md hover:shadow-[0_0_7px_2px_#D4E80D]"
             >
               Buy this now{" "}
               <AiOutlineThunderbolt className="text-lg mt-1 ml-2" />
