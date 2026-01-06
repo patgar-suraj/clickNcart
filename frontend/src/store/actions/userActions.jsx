@@ -5,11 +5,13 @@ import { toast } from "react-toastify";
 // register user
 export const asyncregisteruser = (user) => async (dispatch, getState) => {
   try {
-    const res = await axios.post("/users", user);
+    const { data } = await axios.post("/users", user);
     localStorage.setItem("user", JSON.stringify(data));
     dispatch(loaduser(data));
+    return { success: true, user: data };
   } catch (error) {
     console.log(error);
+    return { success: false };
   }
 };
 
@@ -23,13 +25,13 @@ export const asyncloginuser = (user) => async (dispatch, getState) => {
       const loggedInUser = data[0];
       dispatch(loaduser(loggedInUser));
       localStorage.setItem("user", JSON.stringify(loggedInUser));
-      return { success: "true", user: loggedInUser };
+      return { success: true, user: loggedInUser };
     } else {
-      return { success: "false" };
+      return { success: false };
     }
   } catch (error) {
     toast.error("Something went wrong while logging in!");
-    return { success: "false" };
+    return { success: false };
   }
 };
 
@@ -61,10 +63,14 @@ export const asynccurrentuser = () => async (dispatch, getState) => {
 export const asyncUpdateUser = (id, user) => async (dispatch, getState) => {
   try {
     const { data } = await axios.patch("/users/" + id, user);
+    // Update localStorage and Redux store with the response data
     localStorage.setItem("user", JSON.stringify(data));
-    dispatch(asynccurrentuser());
+    dispatch(loaduser(data));
+    return { success: true, user: data };
   } catch (error) {
     console.log("error", error);
+    toast.error("Failed to update profile!");
+    return { success: false };
   }
 };
 

@@ -178,7 +178,7 @@ const UserProfile = () => {
           {showConfirm && (
             <div className="absolute top-0 left-0 rounded-4xl z-10 w-full h-full flex flex-col items-center justify-center bg-black/90">
               <p className="text-2xl text-center font-semibold text-[#D4E80D]">
-                Are you sure to delete your account?
+                Are you sure to <span className="text-[#e80d0d]">"delete"</span> your account?
               </p>
               <div className="w-full flex items-center justify-center gap-5 my-10">
                 <div
@@ -216,7 +216,7 @@ const UserProfile = () => {
             })}
             type="text"
             placeholder="username"
-            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-[16px] hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
           />
         </div>
 
@@ -232,7 +232,7 @@ const UserProfile = () => {
             })}
             type="email"
             placeholder="email"
-            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-[16px] hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
           />
         </div>
 
@@ -248,7 +248,7 @@ const UserProfile = () => {
             })}
             type="password"
             placeholder="password"
-            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+            className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-[16px] hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
           />
         </div>
 

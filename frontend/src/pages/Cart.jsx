@@ -68,9 +68,9 @@ const Cart = () => {
     return (
       <div className="w-full flex flex-col items-center justify-center text-white bg-black/90">
         <MdOutlineShoppingCart className="text-6xl text-[#D4E80D] mb-3" />
-        <h2 className="text-2xl font-semibold">Your cart is empty</h2>
+        <h2 className="text-2xl font-semibold">Your cart is empty!</h2>
         <p className="text-sm text-white/70 mt-2">
-          Start adding products to your cart!
+          Start adding products to your cart...
         </p>
         <Link
           to="/"

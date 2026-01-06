@@ -26,7 +26,7 @@ const Products = () => {
               alt="sale"
               className="rounded-lg my-5 lg:my-14"
             />
-            <b className="text-[#D4E80D] font-semibold md:text-2xl">
+            <b className="text-[#D4E80D] font-thin md:text-xl">
               ⪻ Yay! You have seen it all ⪼
             </b>{" "}
           </p>

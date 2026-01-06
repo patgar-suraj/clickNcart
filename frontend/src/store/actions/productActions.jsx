@@ -21,7 +21,7 @@ export const asyncCreateProduct = (product) => async (dispatch, getState) => {
   }
 };
 
-// create product
+// update product
 export const asyncUpdateProduct = (id, product) => async (dispatch, getState) => {
   try {
     await axios.patch("/products/" + id, product)

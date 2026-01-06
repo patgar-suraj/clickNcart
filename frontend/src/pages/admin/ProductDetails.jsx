@@ -209,6 +209,9 @@ const ProductDetails = () => {
       {/* update product */}
       {userData && userData?.isAdmin && (
         <div className="flex flex-col w-full items-center justify-center px-5 pt-14 pb-24">
+          <span className="text-[#D4E80D] text-lg md:text-xl mb-5 w-full text-center py-3 border-1 border-[#D4E80D] border-dashed">
+            ⪻ Update Product ⪼
+          </span>
           <form
             onSubmit={handleSubmit(updateHandler)}
             className="w-full md:w-[60vw] xl:w-1/2 flex flex-col items-center justify-center gap-5 p-5 bg-[#1a1a1abc]  border-1 border-[#D4E80D] rounded-4xl"
@@ -267,14 +270,22 @@ const ProductDetails = () => {
                 {" "}
                 {errors.category && errors.category.message}
               </span>
-              <input
+              <select
                 {...register("category", {
                   required: "[ Product category is required ]",
                 })}
-                type="text"
-                placeholder="Product category"
-                className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-semibold text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
-              />
+                className="outline-0 w-full p-2 rounded-2xl border-b-2 border-r-2 border-l-2 border-[#272626] bg-black font-medium text-lg hover:bg-[#00000080] focus:bg-[#00000080] focus:text-[#D4E80D] placeholder:font-thin placeholder:text-sm"
+              >
+                <option className="bg-black" value="shirt">
+                  Shirt's
+                </option>
+                <option className="bg-black" value="pant">
+                  Pant's
+                </option>
+                <option className="bg-black" value="hoodie">
+                  Hoodie's
+                </option>
+              </select>
             </div>
 
             {/* product price */}
